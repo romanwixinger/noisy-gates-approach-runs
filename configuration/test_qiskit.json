@@ -1,0 +1,17 @@
+{
+    "backend": {
+        "hub": "ibm-q",
+        "group": "open",
+        "project": "main",
+        "device_name": "ibmq_manila"
+    },
+    "run": {
+        "n_experiment": 10,
+        "shots": 10,
+        "min_nqubits": 8,
+        "max_nqubits": 10,
+        "qubits_layout": [0, 1, 2, 3, 4],
+        "location_device_parameters": "results/test_real_hardware/device_parameters/",
+        "folder_results": "results/test_qiskit"
+    }
+}
