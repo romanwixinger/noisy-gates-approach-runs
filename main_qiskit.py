@@ -16,11 +16,10 @@ from qiskit.providers.aer import AerSimulator
 from quantum_gates.utilities import fix_counts, load_config, setup_backend
 from quantum_gates.utilities import DeviceParameters
 from quantum_gates.utilities import multiprocessing_parallel_simulation as perform_parallel_simulation
-from quantum_gates.quantum_algorithms import hadamard_reverse_QFT_circ
+from quantum_gates.quantum_algorithms import hadamard_reverse_qft_circ
 
 from configuration.token import IBM_TOKEN
-from src.utilities import construct_ibm_noise_model
-from src.utility.device_parameters import DeviceParameters
+from src.utilities import construct_ibm_noise_model, create_qc_list
 
 
 def main(backend,
@@ -117,4 +116,4 @@ if __name__ == '__main__':
     backend = setup_backend(IBM_TOKEN, **backend_config)
 
     # Run main
-    main(backend, do_simulation, circuit_generator=hadamard_reverse_QFT_circ, **run_config)
+    main(backend, do_simulation, circuit_generator=hadamard_reverse_qft_circ, **run_config)

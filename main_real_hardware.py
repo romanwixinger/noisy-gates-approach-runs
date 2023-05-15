@@ -8,7 +8,7 @@ import numpy as np
 
 from quantum_gates.utilities import fix_counts, load_config, setup_backend
 from quantum_gates.utilities import DeviceParameters
-from quantum_gates.quantum_algorithms import hadamard_reverse_QFT_circ
+from quantum_gates.quantum_algorithms import hadamard_reverse_qft_circ
 
 from configuration.token import IBM_TOKEN
 from src.utilities import create_qc_list
@@ -62,4 +62,4 @@ if __name__ == '__main__':
     backend = setup_backend(IBM_TOKEN, **backend_config)
 
     # Run main
-    main(backend, circuit_generator=hadamard_reverse_QFT_circ, **run_config)
+    main(backend, circuit_generator=hadamard_reverse_qft_circ, **run_config)
