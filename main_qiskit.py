@@ -8,16 +8,18 @@ Note:
 from numpy import savetxt
 import os
 import multiprocessing
-import copy
-import concurrent.futures
 import time
 
 from qiskit.providers.aer import AerSimulator
 
+
+from quantum_gates.utilities import fix_counts, load_config, setup_backend
+from quantum_gates.utilities import DeviceParameters
+from quantum_gates.utilities import multiprocessing_parallel_simulation as perform_parallel_simulation
+from quantum_gates.quantum_algorithms import hadamard_reverse_QFT_circ
+
 from configuration.token import IBM_TOKEN
-from src.utility.simulations_utility import create_qc_list, fix_counts, load_config, setup_backend
-from main.circuits import hadamard_reverse_QFT_circ
-from src.utility.ibm_noise_model import construct_ibm_noise_model
+from src.utilities import construct_ibm_noise_model
 from src.utility.device_parameters import DeviceParameters
 
 
@@ -53,7 +55,7 @@ def main(backend,
 
     # Run
     for n in N_process:
-        mock_perform_parallel_simulation(
+        perform_parallel_simulation(
             args=args,
             simulation=do_simulation,
             max_workers=n
@@ -104,34 +106,10 @@ def do_simulation(arg_dict):
     return
 
 
-def perform_parallel_simulation(args: dict, simulation: callable, max_workers: int):
-    """ The .map method allows to execute the function simulation N_process times simultaneously by preserving the order
-        of the given comprehension list. We create a deepcopy of the argument, the simulation currently modifies it
-        during execution.
-    """
-    # Build function arguments
-    arguments = [copy.deepcopy({**args, 'process': k + 1}) for k in range(max_workers)]
-
-    # Execute parallel simulations
-    with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as executor:
-        executor.map(simulation, arguments)
-
-
-def mock_perform_parallel_simulation(args: dict, simulation: callable, max_workers: int):
-    """ This function mocks the parallel simulation. It is useful for debugging, because the error messages are
-        displayed. In the real parallel simulation, they are muted.
-     """
-    # Build function arguments
-    arguments = [copy.deepcopy({**args, 'process': k + 1}) for k in range(max_workers)]
-
-    for arg in arguments:
-        simulation(arg)
-
-
 if __name__ == '__main__':
 
     # Load configuration
-    config = load_config("IBM_configuration.json")
+    config = load_config("qiskit.json")
     run_config = config["run"]
     backend_config = config["backend"]
 

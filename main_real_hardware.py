@@ -4,13 +4,14 @@ Note:
     File as migrated from https://github.com/mvischi/Noisy-Quantum-Gates/blob/parallel/main/main_REAL.py.
 """
 
-
 import numpy as np
 
+from quantum_gates.utilities import fix_counts, load_config, setup_backend
+from quantum_gates.utilities import DeviceParameters
+from quantum_gates.quantum_algorithms import hadamard_reverse_QFT_circ
+
 from configuration.token import IBM_TOKEN
-from src.utility.simulations_utility import fix_counts, create_qc_list, load_config, setup_backend
-from main.circuits import hadamard_reverse_QFT_circ
-from src.utility.device_parameters import DeviceParameters
+from src.utilities import create_qc_list
 
 
 def main(backend,
@@ -53,7 +54,7 @@ def main(backend,
 if __name__ == '__main__':
 
     # Load configuration
-    config = load_config()
+    config = load_config(filename="real_hardware.json")
     run_config = config["run"]
     backend_config = config["backend"]
 
