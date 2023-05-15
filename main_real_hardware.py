@@ -34,7 +34,12 @@ def main(backend,
     device_param.save_to_texts(location=location_device_parameters)
 
     # Create the circuits list and do the transpile
-    qc_list = create_qc_list(circuit_generator, nqubits_list, qubits_layout, backend)
+    qc_list = create_qc_list(circuit_generator=circuit_generator,
+                             nqubits_list=nqubits_list,
+                             qubits_layout=qubits_layout,
+                             backend=backend)
+
+    print(qc_list)
 
     # Run the circuits
     job = backend.run(qc_list, shots=shots)
@@ -42,6 +47,7 @@ def main(backend,
 
     # Postprocess and save the result
     for nqubit in nqubits_list:
+        print(f'Start with {nqubit} qubits.')
         counts_0 = result.get_counts(qc_list[nqubit-min_nqubits])
         counts = fix_counts(nqubit, counts_0)
         p_real = [counts[j][1]/shots for j in range(0, 2**nqubit)]
