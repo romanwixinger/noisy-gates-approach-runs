@@ -6,10 +6,10 @@
     "device_name": "ibmq_manila"
   },
   "run": {
-    "shots": 1000,
+    "shots": 10,
     "min_nqubits": 2,
-    "max_nqubits": 2,
-    "qubits_layout": [0, 1],
+    "max_nqubits": 5,
+    "qubits_layout": [0, 1, 2, 3, 4],
     "location_device_parameters": "results/test_real_hardware/device_parameters/",
     "folder_results": "results/test_real_hardware"
   }

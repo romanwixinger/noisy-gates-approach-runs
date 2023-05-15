@@ -66,10 +66,9 @@ def construct_ibm_noise_model(backend, qubits_layout, device_param):
     nqubit = len(qubits_layout)
     noise_model = NoiseModel()
 
-    # Todo: Fix, in the new version the number of entries is different.
-    T1, T2, p, rout, p_cnot, t_cnot = device_param.get_as_tuple()
+    T1, T2, p, rout, p_cnot, t_cnot, tm, dt, metadata = device_param.get_as_tuple()
 
-    for j in range(0,nqubit):
+    for j in range(0, nqubit):
 
         # Single qubit depolarizing
         dep = depolarizing_error(p[j],1)
@@ -83,12 +82,12 @@ def construct_ibm_noise_model(backend, qubits_layout, device_param):
         relax = phase_amplitude_damping_error(p1,pz)
 
         # Spam
-        spam = pauli_error([('X',rout[j]), ('I', 1 - rout[j])])
+        spam = pauli_error([('X', rout[j]), ('I', 1 - rout[j])])
 
         # Adding errors to noise model
         single_qubit_gate_error = dep.compose(relax)
-        noise_model.add_quantum_error(single_qubit_gate_error, ["x","sx"],[qubits_layout[j]])
-        noise_model.add_quantum_error(spam, "measure",[qubits_layout[j]])
+        noise_model.add_quantum_error(single_qubit_gate_error, ["x", "sx"],[qubits_layout[j]])
+        noise_model.add_quantum_error(spam, "measure", [qubits_layout[j]])
 
     for j in range(0, nqubit):
         for k in range(0,nqubit):
@@ -116,6 +115,6 @@ def construct_ibm_noise_model(backend, qubits_layout, device_param):
 
                 # Adding errors to noise model
                 two_qubits_gate_error = dep_cnot.compose(relax_jk)
-                noise_model.add_quantum_error(two_qubits_gate_error, "cx",[qubits_layout[j],qubits_layout[k]])
+                noise_model.add_quantum_error(two_qubits_gate_error, "cx", [qubits_layout[j], qubits_layout[k]])
 
     return noise_model

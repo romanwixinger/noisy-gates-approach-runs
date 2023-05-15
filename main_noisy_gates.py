@@ -10,16 +10,16 @@ import numpy as np
 import time
 import copy
 
-from configuration.token import IBM_TOKEN
-from main.circuits import hadamard_reverse_QFT_circ
-from src.utility.simulations_utility import create_qc_list, load_config, setup_backend
-from src.utility.device_parameters import DeviceParameters
-from src.simulation.circuit import EfficientCircuit
-from src.simulation.simulator import MrAndersonSimulator
-from src.utility.simulations_utility import mock_perform_parallel_simulation as perform_parallel_simulation
-from src.legacy.gates import LegacyGates
+from quantum_gates.utilities import load_config, setup_backend
+from quantum_gates.utilities import DeviceParameters
+from quantum_gates.quantum_algorithms import hadamard_reverse_qft_circ
+from quantum_gates.circuits import EfficientCircuit
+from quantum_gates.simulators import MrAndersonSimulator
+from quantum_gates.gates import legacy_gates
+from quantum_gates.utilities import multiprocessing_parallel_simulation as perform_parallel_simulation
 
-print("Warning: We mock the parallel simulation.")
+from configuration.token import IBM_TOKEN
+from src.utilities import create_qc_list
 
 
 def main(backend,
@@ -85,7 +85,7 @@ def do_simulation(args: dict) -> tuple:
     psi0[0] = 1
 
     # Create simulator
-    sim = MrAndersonSimulator(gates=LegacyGates, CircuitClass=EfficientCircuit, parallel=False)
+    sim = MrAndersonSimulator(gates=legacy_gates, CircuitClass=EfficientCircuit, parallel=False)
 
     # Timeit
     start = time.time()
@@ -117,7 +117,7 @@ def do_simulation(args: dict) -> tuple:
 if __name__ == '__main__':
 
     # Load configuration
-    config = load_config("NG_configuration.json")
+    config = load_config("test_noisy_gates.json")
     run_config = config["run"]
     backend_config = config["backend"]
 
@@ -125,4 +125,4 @@ if __name__ == '__main__':
     backend = setup_backend(IBM_TOKEN, **backend_config)
 
     # Run main
-    main(backend, do_simulation, circuit_generator=hadamard_reverse_QFT_circ, **run_config)
+    main(backend, do_simulation, circuit_generator=hadamard_reverse_qft_circ, **run_config)

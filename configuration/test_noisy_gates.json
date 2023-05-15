@@ -1,0 +1,17 @@
+{
+    "backend": {
+        "hub": "ibm-q",
+        "group": "open",
+        "project": "main",
+        "device_name": "ibmq_manila"
+    },
+    "run": {
+        "n_experiment": 2,
+        "shots": 10,
+        "splits": 1,
+        "qubits_list": [2, 3, 4, 5],
+        "qubits_layout": [0, 1, 2, 3, 4],
+        "folder_results": "results/test_noisy_gates",
+        "location_device_parameters": "results/test_real_hardware/device_parameters/"
+    }
+}
