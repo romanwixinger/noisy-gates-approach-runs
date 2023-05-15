@@ -1,0 +1,17 @@
+{
+    "backend": {
+        "hub": "ibm-q-cern",
+        "group": "internal",
+        "project": "default",
+        "device_name": "ibmq_kolkata"
+    },
+    "run": {
+        "n_experiment": 100,
+        "shots": 10000,
+        "splits": 1,
+        "qubits_list": [8, 9, 10],
+        "qubits_layout": [0, 1, 4, 7, 10, 12, 15, 18, 21, 23, 24, 25, 22, 19, 16, 14, 11, 8, 5, 3, 2],
+        "folder_results": "results/noisy-gates",
+        "location_device_parameters": "results/noisy-gates/device_parameters/"
+    }
+}
