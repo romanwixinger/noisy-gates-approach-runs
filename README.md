@@ -8,8 +8,3 @@ Clone this repository and make sure that you have Python 3.9 installed. Navigate
 environment with 'python -m venv ng-env' where we named the environment 'ng-env'. Depending on the OS you are using, the
 command for activating the virtual environment differs. In Linux, we use 'source ng-env/bin/activate'. Last, you install 
 all dependencies with 'pip install --user .'. Now you are ready to run the main scripts. 
-
-
-
-
-
